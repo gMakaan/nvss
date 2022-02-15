@@ -2,9 +2,11 @@ Language: **EN**, other: [RU](README-ru.md)
 
 > **Note:** *The publication will be after reaching the first release version - nvss-1.0.0*
 
+**- Russian localization get preview stage now -**
+
 The current status of the release development completion:
 
-![progress](https://progress-bar.dev/83/?title=1.0.0)
+![progress](https://progress-bar.dev/98/?title=1.0.0)
 
 ----
 
