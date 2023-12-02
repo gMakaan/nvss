@@ -2,7 +2,7 @@
 
 Current NVSS revision: **nvss-1.0.0-en**
 
-NVSS - Standardization of object versioning. A pocket analogue of Git or Svn, where only the version string itself is controlled, not the content itself. When an object changes, its version string changes in accordance with NVSS rules.
+NVSS - Standardization of object versioning. A pocket analogue of Git or Svn, where only the version string itself is controlled and standartized, not the content itself. When an object changes, its version string changes in accordance with NVSS rules.
 
 * **No version conflicts when working on copies of the same object in parallel**.
 * Full support for [SemVer](https://semver.org).
@@ -11,7 +11,13 @@ NVSS - Standardization of object versioning. A pocket analogue of Git or Svn, wh
 * Availability of addresses and scope of rights for authors of versions.
 * Human readable syntax. Adapted for handmade.
 
-NVSS is optimized for manual versioning, which allows you to use this system where full-fledged version control systems are redundant or simply impossible. For example, parallel work/review of printed documents. Or work with graphic content. Or many single unrelated files, templates, documents...
+NVSS is optimized for manual versioning, which allows you to use this system where full-fledged version control systems are redundant or uncomfortable.
+
+Example:
+
+* individual files, templates, documents, each with their own version
+* parallel work/review of printed documents
+* work with graphic content
 
 Version inheritance makes it easier to combine different modifications, and also allows you to find out where the modification came from and its relevance.
 
@@ -35,20 +41,20 @@ The simplicity of the syntax allows you to quickly make parsers for automation.
     - [Delimiters](#delimiters)
     - [Allowed characters in prefixes, addresses and names](#allowed-characters-in-prefixes-addresses-and-names)
   - [Description of the main actions with examples](#description-of-the-main-actions-with-examples)
-    - [Master version: create `(init)`](#master-version-create-init)
-    - [Master version: change `([fetch downstream + merge] | commit)`](#master-version-change-fetch-downstream--merge--commit)
-    - [Master version: change of address](#master-version-change-of-address)
-    - [Master version: fix `(amend)`](#master-version-fix-amend)
-    - [Modification: creation `(clone upstream + commit)`](#modification-creation-clone-upstream--commit)
-    - [Modification: change `([fetch downstream + merge] | commit)`](#modification-change-fetch-downstream--merge--commit)
-    - [Modification: fix `(amend)`](#modification-fix-amend)
-    - [Modification: base change `(pull upstream)`](#modification-base-change-pull-upstream)
+    - [Master-version: create (init)](#master-version-create-init)
+    - [Master-version: change (\[fetch downstream + merge\] | commit)](#master-version-change-fetch-downstream--merge--commit)
+    - [Master-version: change of address](#master-version-change-of-address)
+    - [Master-version: fix (amend)](#master-version-fix-amend)
+    - [Modification: creation (clone upstream + commit)](#modification-creation-clone-upstream--commit)
+    - [Modification: change (\[fetch downstream + merge\] | commit)](#modification-change-fetch-downstream--merge--commit)
+    - [Modification: fix (amend)](#modification-fix-amend)
+    - [Modification: base change (pull upstream)](#modification-base-change-pull-upstream)
     - [Modification: address change](#modification-address-change)
-    - [Branch: creation `(branch [+ commit])`](#branch-creation-branch--commit)
-    - [Branch: change `(commit)`](#branch-change-commit)
-    - [Branch: fix `(amend)`](#branch-fix-amend)
-    - [Branch: base change `(merge + commit)`](#branch-base-change-merge--commit)
-    - [Branch: change name `(branch -m)`](#branch-change-name-branch--m)
+    - [Branch: creation (branch \[+ commit\])](#branch-creation-branch--commit)
+    - [Branch: change (commit)](#branch-change-commit)
+    - [Branch: fix (amend)](#branch-fix-amend)
+    - [Branch: base change (merge + commit)](#branch-base-change-merge--commit)
+    - [Branch: change name (branch -m)](#branch-change-name-branch--m)
   - [NVSS examples](#nvss-examples)
   - [Links and extra info](#links-and-extra-info)
 
@@ -86,14 +92,14 @@ master {mod | branch}
 * master-version - major/root version of an object, assigned by the object's author
 * modification - a modified version of the object with a different address
 * branch - a modified version of the object without changing the address (and editing rights)
-* base - the original (inherited) version of the object (and part of the NVSS string) on which the modification or branch is based
-* address - defines (and distinguishes) the location of the object's version
+* base - the original (inherited) version of the object (and fixed part of the NVSS string) on which the modification or branch is based
+* address - defines (and distinguishes) the location of the object
 * author - creator of the master-version, modification, or branch
 
 Definitions - actions
 
 * change - action after which the version of the object must be changed
-* fix - an action after which the version of the object does not change. It is allowed to use if this version is not used anywhere
+* fix - an action after which the version of the object does not change. It is allowed to use if this version is not used anywhere yet
 * merge - the process of merging different versions of an object
 
 ## Comparison with git
@@ -203,7 +209,7 @@ Description and characteristics of the fields:
 * `major` - major version (number), incremented on major changes (causing incompatibility with previous `major` version)
 * `minor` - minor version (number), increases with minor changes (there is compatibility with the current `major` version)
 * `patch` - patch of the current version (number), incremented by bug fixes, patches (there is compatibility with the current `major.minor` version)
-* `tag` - optional tags of the current version separated by `.`. Unlike semver, NVSS disallows usage of the `-` character in tag names. Used to explain the features of a version, e.g. `-rc1` or `-dev` or `-prerelease` etc.
+* `tag` - optional tags of the current version separated by `.`. Unlike semver, NVSS disallows the use of the `-` character in tag names. Used to explain the features of a version, e.g. `-rc1` or `-dev` or `-prerelease` etc.
 
 > **Note:** *The `{}` brackets contain parts repeated 0 or more times.*
 
@@ -254,9 +260,9 @@ Description of the mask:
 * `sss` - milliseconds (3-digit format, with leading zeros)
 * `utcOffset` - offset from UTC (letter)
 
-By default, without `utcOffset`, the mask specifies **local** time. To use global time, UTC is added to the end of the `Z` tag and the time is specified as **global**. Explicit local time
+By default, without `utcOffset`, the mask specifies **local** time. To use global time, UTC is added to the end of the `Z` tag and the time is specified as **global**.
 
-The [military time zones](https://en.wikipedia.org/wiki/List_of_military_time_zones) (letter designation) can be used to indicate an offset from UTC:
+The [military time zones](https://en.wikipedia.org/wiki/List_of_military_time_zones) (letter designation) is used to indicate an offset from UTC:
 
 | A  | b  | c  | D  | e  | F  | G  | h  | I  | K   | l   | M   |
 | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- |
@@ -394,7 +400,7 @@ For normal use
 
 ## Description of the main actions with examples
 
-### Master version: create `(init)`
+### Master-version: create (init)
 
 * adding a master-version line to comply with NVSS rules. The version designation must comply with SemVer's semantic versioning rules.
 
@@ -402,7 +408,7 @@ For normal use
 | ------ | -- | ----- |
 |        | →  | v1.0  |
 
-### Master version: change `([fetch downstream + merge] | commit)`
+### Master-version: change ([fetch downstream + merge] | commit)
 
 * change `version` or `timeSnapshot` according to NVSS rules.
 
@@ -410,7 +416,7 @@ For normal use
 | ------ | -- | ----- |
 | v1.0   | →  | v2.0  |
 
-### Master version: change of address
+### Master-version: change of address
 
 * changes (`masterAddress`) to another. The designation or timestamp of the master-version does not change.
 
@@ -424,9 +430,9 @@ For normal use
 | creator-v2.0     | →  | creator_to_altername-v2.0 |
 | creator-v2.0     | →  | creator2altername-v2.0    |
 
-### Master version: fix `(amend)`
+### Master-version: fix (amend)
 
-> **Note:** *available only if it is guaranteed that the current master-version of the object is not used anywhere.*
+> **Attention:** *available only if it is guaranteed that the current master-version of the object is not used anywhere.*
 
 * `version` or `timeSnapshot` is not incremented, this counts as a fix to the current version.
 
@@ -434,7 +440,7 @@ For normal use
 | ------ | -- | ----- |
 | v1.0   | →  | v1.0  |
 
-### Modification: creation `(clone upstream + commit)`
+### Modification: creation (clone upstream + commit)
 
 * when making changes to an object, add `modAddress` and set `modChanges` to 1;
 * if there are no changes to the object, add `modAddress` and set `modChanges` to 0. Used to assign a modification address in advance, before changes.
@@ -444,7 +450,7 @@ For normal use
 | v1.0             | →  | v1.0-mod-1      |
 | v1.0             | →  | v1.0-mod-0      |
 
-### Modification: change `([fetch downstream + merge] | commit)`
+### Modification: change ([fetch downstream + merge] | commit)
 
 * increase `modChanges` according to NVSS rules.
 
@@ -452,7 +458,7 @@ For normal use
 | ---------- | -- | ---------- |
 | v1.0-mod-1 | →  | v1.0-mod-2 |
 
-### Modification: fix `(amend)`
+### Modification: fix (amend)
 
 > **Attention:** *only available if it is guaranteed that this version of the modification of the object is not used anywhere.*
 
@@ -462,7 +468,7 @@ For normal use
 | ---------- | -- | ---------- |
 | v1.0-mod-1 | →  | v1.0-mod-1 |
 
-### Modification: base change `(pull upstream)`
+### Modification: base change (pull upstream)
 
 > **Note:** *The current database may become unavailable for some reason, out of date or change address - then the new database will be with a different address. Use it after making sure it is up-to-date and compatible with the current modification.*
 
@@ -484,7 +490,7 @@ For normal use
 | v1.0-mod-1       | →  | v1.0-m-1        |
 | v1.0-mod-2       | →  | v1.0-m-2        |
 
-### Branch: creation `(branch [+ commit])`
+### Branch: creation (branch [+ commit])
 
 * when making changes to an object, add `branchName` and set `branchChanges` to 1;
 * if there is no change to the object, add `branchName` and set `branchChanges` to 0. Used to assign a branch name ahead of time before changes are made.
@@ -494,7 +500,7 @@ For normal use
 | v1.0             | →  | v1.0-.dev-1     |
 | v1.0             | →  | v1.0-.dev-0     |
 
-### Branch: change `(commit)`
+### Branch: change (commit)
 
 * increase `branchChanges` according to NVSS rules.
 
@@ -502,9 +508,9 @@ For normal use
 | ----------- | -- | ----------- |
 | v1.0-.dev-1 | →  | v1.0-.dev-2 |
 
-### Branch: fix `(amend)`
+### Branch: fix (amend)
 
-> **Note:** *only available if it is guaranteed that this version of the object branch is not used anywhere.*
+> **Attention:** *only available if it is guaranteed that this version of the object branch is not used anywhere.*
 
 * `branchChanges` is not incremented, this counts as a fix to the current version.
 
@@ -512,7 +518,7 @@ For normal use
 | ----------- | -- | ----------- |
 | v1.0-.dev-1 | →  | v1.0-.dev-1 |
 
-### Branch: base change `(merge + commit)`
+### Branch: base change (merge + commit)
 
 * the new database is merged with the current version of the branch;
 * if there are no differences from the base after the merge - `branchChanges` is set to 0. Used to save the branch address before changes;
@@ -526,7 +532,7 @@ For normal use
 | v1.0-mod-1-.dev-1 | →  | v1.0-mod-2-.dev-1 |
 | v1.0-.dev-1       | →  | v2.0-.dev-1       |
 
-### Branch: change name `(branch -m)`
+### Branch: change name (branch -m)
 
 * `branchName` changes, while `branchChanges` may not be reset to 1.
 
@@ -559,7 +565,7 @@ Using the example file `somefile`:
 
 Process example 1:
 
-1. Master version of the object: `nvss-v3`
+1. Master-version of the object: `nvss-v3`
 2. Author 1 got the object and created his modification: `nvss-v3-user1-1`
 3. Author 2 received a modification of the object from author 1 and also made his own changes: `nvss-v3-user1-1-user2-1`
 4. The master-version of the object has changed in the meantime: `nvss-v5`
